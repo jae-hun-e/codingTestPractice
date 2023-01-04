@@ -1,3 +1,4 @@
+#  효율성 실패 
 def solution(phone_book):
     phone_book.sort(key=len)
 
@@ -8,6 +9,7 @@ def solution(phone_book):
                 print(phone_book[i])
                 return False
     return True
+
 
 
 # test
