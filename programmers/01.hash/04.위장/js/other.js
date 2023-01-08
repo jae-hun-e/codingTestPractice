@@ -1,8 +1,11 @@
 function solution(clothes) {
-    let map = {};
-    clothes.map((item) => (map[item[1]] ? map[item[1]]++ : (map[item[1]] = 1)));
+    const map = new Map();
+    let count = 1;
 
-    return Object.values(map).reduce((total, now) => total * (now + 1), 1) - 1;
+    for (let [_, t] of clothes) map.has(t) ? map.set(t, map.get(t) + 1) : map.set(t, 1);
+
+    for (let x of map.values()) count *= x + 1;
+    return count - 1;
 }
 
 //test
