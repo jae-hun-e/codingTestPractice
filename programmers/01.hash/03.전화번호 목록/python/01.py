@@ -1,4 +1,3 @@
-#  효율성 실패 
 def solution(phone_book):
     phone_book.sort()
 
