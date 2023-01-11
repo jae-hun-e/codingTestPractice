@@ -1,17 +1,3 @@
-/*
-많은 장르 먼저 
-    장르 내  많이 재생
-        고유번호 낮은 노래
-
-
-*/
-
-/*
-map = {
-    장르 : [[재생횟수, 번호]]
-}
-*/
-
 function solution(genres, plays) {
     let answer = [];
     const mapping = genres.reduce((map, now, i) => {
