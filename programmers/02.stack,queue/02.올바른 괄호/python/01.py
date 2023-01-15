@@ -8,7 +8,7 @@ def solution(s):
             if cnt < 0: 
                 return False
 
-    return cnt == 0
+    return True if cnt == 0 else False
 
 # test
 print(solution("()()"))
