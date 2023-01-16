@@ -1,17 +1,12 @@
 function solution(priorities, location) {
-    const que = priorities.reduce((que, now, idx) => {
-        que.push([now, idx]);
-        return que;
-    }, []);
-    let max = Math.max(...priorities);
-    let i = 0;
-    while (i < que.length) {
-        if (que[i][0] < max) {
-            que.push(que.shift());
-        } else {
-            i++;
-            max = Math.max(...que.slice(i).map((e) => e[0]));
-        }
+    const que = priorities.map((e, idx) => [e, idx]);
+
+    const max = Math.max(...priorities);
+    console.log("max", max);
+    while (1) {
+        console.log("첫번째 값", que[0][0]);
+        if (que[0][0] < max) que.push(que.shift());
+        else break;
     }
 
     return que.findIndex((e) => e[1] === location) + 1;
