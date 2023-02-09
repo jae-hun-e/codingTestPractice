@@ -22,17 +22,17 @@ function solution(bridge_length, weight, truck_weights) {
             bridgeWeight += addTruck;
             bridgeQue.push(addTruck);
         } else {
-            // 못 올릴 때
-            const curIndex = bridgeQue.findIndex((weight) => weight > 0);
-            if (curIndex !== -1) {
-                cnt += curIndex;
-                bridgeQue.unshift(bridgeQue[curIndex]);
-                bridgeQue.fill(0, 1);
-            }
-            // bridgeQue.push(0);
+            if (bridgeQue[0] !== 0) {
+                // 못 올릴 때 남은 다리 길이 점프
+                const truckIndex = bridgeQue.findIndex((weight) => weight > 0);
+                cnt += truckIndex;
+                bridgeQue = bridgeQue
+                    .splice(truckIndex)
+                    .concat(Array.from({ length: truckIndex }, () => 0));
+                bridgeQue.push(0);
+            } else bridgeQue.push(0);
         }
     }
-
     return cnt;
 }
 
