@@ -57,15 +57,7 @@ class SingleLinkedList {
             while (prevNode.next.value !== value) {
                 prevNode = prevNode.next;
             }
-
-            // 찾은 Node의 다음 Node를 다다음 Node로 변경 (삭제할 node의 연결이 끊기고 나중에 GC가 삭제함)
-            if (prevNode.next !== null) {
-                // 마지막 Node가 아닐 경우
-                prevNode.next = prevNode.next.next;
-            } else {
-                // 마지막 node일 경우
-                this.tail = prevNode;
-            }
+            prevNode.next = prevNode.next.next;
         }
     }
 
