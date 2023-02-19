@@ -27,3 +27,14 @@ FROM
 WHERE 
     total_order > '3000'
     AND INGREDIENT_TYPE ="fruit_based"
+
+
+-- 04
+SELECT
+    rest.rest_id, rest.rest_name, rest.food_type, rest.favorites, rest.address, round(avg(review.review_score),2) as score
+from
+    rest_info as rest join rest_review as review
+    on rest.rest_id = review.rest_id
+group by rest.rest_id
+having rest.address like '서울%'
+order by score desc, rest.favorites desc

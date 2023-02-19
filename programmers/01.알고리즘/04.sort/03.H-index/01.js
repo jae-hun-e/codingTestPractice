@@ -2,8 +2,13 @@
 
 function solution(citations) {
     citations.sort((a, b) => b - a);
-    console.log(citations);
-    return;
+    // console.log(citations);
+
+    let cnt = 0;
+    while (cnt + 1 <= citations[cnt]) {
+        cnt++;
+    }
+    return cnt;
 }
 
 // test
