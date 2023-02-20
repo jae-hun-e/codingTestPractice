@@ -27,7 +27,6 @@ const heap = new MinHeap();
 
 // function으로 heap구현하기
 function solution(jobs) {
-    var answer = 0;
     return;
 }
 
