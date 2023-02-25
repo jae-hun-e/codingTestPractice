@@ -1,5 +1,30 @@
 function solution(n, edge) {
-    return;
+    const graph = Array.from(Array(n + 1), () => []);
+
+    for (const [src, dest] of edge) {
+        graph[src].push(dest);
+        graph[dest].push(src);
+    }
+    console.log(graph);
+
+    const dist = Array(n + 1).fill(0);
+    dist[1] = 1;
+    console.log(dist);
+
+    const queue = [1];
+    while (queue.length > 0) {
+        const src = queue.shift();
+        for (const dest of graph[src]) {
+            if (dist[dest] === 0) {
+                queue.push(dest);
+                dist[dest] = dist[src] + 1;
+                console.log("queue:", queue);
+            }
+        }
+    }
+
+    const max = Math.max(...dist);
+    return dist.filter((i) => i === max).length;
 }
 
 console.log(
