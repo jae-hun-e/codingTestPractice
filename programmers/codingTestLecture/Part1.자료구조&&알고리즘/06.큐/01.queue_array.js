@@ -13,8 +13,8 @@ class Queue {
     // queue에서 삭제
     dequeue() {
         const value = this.queue[this.front];
-        delete this.queue[this.front]; // que에서 나간 요소 제거
-        this.front++;
+        delete this.queue[this.front++]; // que에서 나간 요소 제거
+
         return value;
     }
 
