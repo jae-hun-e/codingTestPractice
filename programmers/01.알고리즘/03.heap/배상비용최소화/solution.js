@@ -87,5 +87,20 @@ function solution(no, works) {
     return heap.heap.reduce((total, now) => total + now * now);
 }
 
-console.log(solution(4, [4, 3, 3])); // 12
+// console.log(solution(4, [4, 3, 3])); // 12
 // console.log(solution(2, [3, 3, 3])); // 17
+
+const heap = new MaxHeap();
+
+heap.push(1);
+console.log(heap.heap);
+heap.push(4);
+console.log(heap.heap);
+heap.push(3);
+console.log(heap.heap);
+heap.push(7);
+console.log(heap.heap);
+heap.push(5);
+console.log(heap.heap);
+heap.push(2);
+console.log(heap.heap);
