@@ -44,7 +44,7 @@ function bfs(graph, start, visited) {
     queue.enqueue(start);
     visited[start] = true;
     console.log("visited node number: ", start);
-/
+
     while (queue.size()) {
         const v = queue.dequeue();
 
