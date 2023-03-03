@@ -1,16 +1,15 @@
-function getAllCase(arr, now){ 
-    const results = []
-    if(num === 1)
-}
-
+// 실패!!
 function solution(k, dungeons) {
     dungeons.sort((a, b) => b[0] - a[0]);
     // console.log(dungeons);
 
     let count = 0;
 
-    while(k <= 0){
-
+    for (const [need, use] of dungeons) {
+        if (k >= need) {
+            k -= use;
+            count++;
+        } else break;
     }
 
     return count;

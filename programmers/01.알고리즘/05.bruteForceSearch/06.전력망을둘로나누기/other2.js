@@ -1,39 +1,41 @@
 function solution(n, wires) {
-    // const graph = Array.from({ length: n + 1 }, () => []);
+    const links = {};
 
-    const graph = {};
     for (const [start, end] of wires) {
-        !graph[start] ? (graph[start] = [end]) : graph[start].push(end);
-        !graph[end] ? (graph[end] = [start]) : graph[end].push(start);
+        !links[start] ? (links[start] = [end]) : links[start].push(end);
+        !links[end] ? (links[end] = [start]) : links[end].push(start);
     }
-    console.log(graph);
+    console.log(links);
 
-    function bfs(root, exception) {
+    // bfs - 끊어졌을 때 가정
+    function searchTree(start, end) {
         let cnt = 0;
-        const visited = Array(n + 1).fill(false);
-        const queue = [root];
-        visited[root] = true;
+        const queue = [start];
+        const visited = Array(n).fill(false);
+        visited[start] = true;
 
+        // tree 몇개인지
         while (queue.length) {
-            const v = queue.shift();
-
-            for (const node of graph[v]) {
-                if (!visited[node] && node !== exception) {
+            const cur = queue.pop();
+            for (const node of links[cur]) {
+                if (!visited[node] && node !== end) {
                     visited[node] = true;
                     queue.push(node);
                 }
             }
             cnt++;
         }
+        console.log(`start${start} -> end${end}, links = ${cnt}`);
         return cnt;
     }
 
-    let ans = 100;
+    let answer = 100;
     for (const [start, end] of wires) {
-        const diff = Math.abs(bfs(start, end) - bfs(end, start));
-        ans = ans > diff ? diff : ans;
+        const diff = Math.abs(searchTree(start, end) - searchTree(end, start));
+        answer = answer > diff ? diff : answer;
     }
-    return ans;
+
+    return answer;
 }
 
 console.log(
