@@ -7,6 +7,7 @@ function solution(maps) {
 
     while (queue.length) {
         const current = queue.shift();
+        console.log("x,y", current[0], current[1]);
         if (current[0] === xSize - 1 && current[1] === ySize - 1) return current[2];
 
         for (let i = 0; i < 4; i++) {
