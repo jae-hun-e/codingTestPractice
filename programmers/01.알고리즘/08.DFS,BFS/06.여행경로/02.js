@@ -1,8 +1,8 @@
 // ICN 출발
 
 function solution(tickets) {
+    tickets.sort();
     const nodeList = new Set(tickets.flatMap((v) => v));
-
     const graph = {};
     nodeList.forEach((node) => {
         graph[node] = [];
@@ -23,7 +23,6 @@ function solution(tickets) {
     // 방문 횟수
     const visited = {};
 
-    console.log(nodeList);
     for (const node of nodeList) {
         let cnt = 0;
         tickets.forEach(([_, end]) => {
