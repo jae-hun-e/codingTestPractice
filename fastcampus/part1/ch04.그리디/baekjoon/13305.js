@@ -1,8 +1,12 @@
 const fs = require("fs");
 const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
-// 남은 곳중 나보다 싼곳이 있으면 다음칸 갈때까지만 넣고
-// 내가 제일 싸면 끝까지 갈만큼 넣어버림
+// sol2
+/**
+ * 핵심아이디어 :
+ * 주유비용을 비오름차순으로 변경 : 자기보다 뒤에 있는 비싼 주요소는 미리 결제한다
+ * => 비싼 주요소의 금액을 자신것으로 바꾼다
+ */
 
 const num = Number(input[0]);
 const a = input[1].split(" ").map(Number);
