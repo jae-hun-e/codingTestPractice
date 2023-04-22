@@ -18,6 +18,10 @@ while (1) {
 // console.log(arr, a);
 
 let cnt = 0;
-while (v > 0) {
+while (1) {
+
     cnt = arr.find((v) => v[0] === a)[1];
+    for(let i=0; i<cnt;i++) {
+        if(v>0){}
+    }
 }
