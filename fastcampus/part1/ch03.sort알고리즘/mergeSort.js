@@ -3,7 +3,7 @@ function merge(arr, left, mid, right) {
     let i = left; // 왼쪽 배열
     let j = mid + 1; // 오른쪽 배열
     let k = left;
-    let sorted = []; // 정렬된 배열
+
     while (i <= mid && j <= right) {
         if (arr[i] <= arr[j]) sorted[k++] = arr[i++]; // 오름차순 정렬
         else sorted[k++] = arr[j++];
@@ -36,3 +36,8 @@ function mergeSort(arr, left, right) {
         merge(arr, left, mid, right); // 정렬된 두개 하나로 병합
     }
 }
+
+let arr = Array.from({ length: 10000 }, () => Math.floor(Math.random() * 1000)); // 무작위 배열 생성
+let sorted = Array.from({ length: arr.length }, () => 0); // 임시 정렬된 배열
+
+mergeSort(arr, 0, arr.length - 1);
