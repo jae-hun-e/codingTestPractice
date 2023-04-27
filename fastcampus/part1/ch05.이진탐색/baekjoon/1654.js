@@ -13,7 +13,6 @@ let l = 0;
 while (start <= end) {
     let mid = parseInt((start + end) / 2);
     let sum = 0;
-
     for (x of arr) {
         sum += parseInt(x / mid);
     }
