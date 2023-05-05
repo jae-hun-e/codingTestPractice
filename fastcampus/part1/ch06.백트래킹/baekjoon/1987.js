@@ -20,9 +20,15 @@ function able(location) {
     return true;
 }
 
-function dfs(location, dep) {
-    // if(!able(location))
-    // if()
+const dx = [0, 0, -1, 1];
+const dy = [-1, 1, 0, 0];
+let cnt = 0;
+function dfs(loc, dep) {
+    if (!able(loc)) cnt++;
+
+    for (let i = 0; i < 4; i++) {
+        loc[0] + dx[i];
+    }
 }
 
 dfs([0, 0], 0);
