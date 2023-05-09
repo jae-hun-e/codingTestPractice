@@ -39,8 +39,8 @@ while (ts--) {
     const graph = Array.from({ length: n }, () => Array(m));
 
     for (let i = 1; i <= k; i++) {
-        let [x, y] = input[line + i].split(" ").map(Number);
-        graph[y][x] = 1;
+        let [y, x] = input[line + i].split(" ").map(Number);
+        graph[x][y] = 1;
     }
     // console.log(graph)
 
@@ -48,28 +48,27 @@ while (ts--) {
     // 하나씩 검사
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < m; j++) {
-            function dfs(y, x) {
-                if (x < 0 || x >= m || y < 0 || y >= n) {
-                    return 0;
-                }
-                if (graph[y][x] === 1) {
-                    graph[y][x] = 0;
-
-                    // 틀림
-                    for (let i = 0; i < 4; i++) {
-                        const nx = x + dx[i];
-                        const ny = y + dy[i];
-                        dfs(ny, nx);
-                    }
-                    // cnt++;
-                    return 1;
-                }
-                return 0;
-            }
-            // dfs(j, i);
-            if (dfs(j, i) === 1) cnt++;
+            if (dfs(graph, n, m, i, j) === 1) cnt++;
         }
     }
     line += k + 1;
     console.log(cnt);
+}
+
+function dfs(graph, n, m, x, y) {
+    if (x < 0 || x >= n || y < 0 || y >= m) {
+        return 0;
+    }
+    if (graph[x][y] === 1) {
+        graph[x][y] = 0;
+
+        for (let i = 0; i < 4; i++) {
+            const nx = x + dx[i];
+            const ny = y + dy[i];
+            dfs(graph, n, m, nx, ny);
+        }
+
+        return 1;
+    }
+    return 0;
 }
