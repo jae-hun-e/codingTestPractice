@@ -12,4 +12,4 @@ const getCombinations = (arr, num) => {
     return results;
 };
 
-console.log(getCombinations([1, 2, 3, 4], 2));
+console.log(getCombinations([1, 2, 3, 4], 3));

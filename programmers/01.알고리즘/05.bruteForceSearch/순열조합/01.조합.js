@@ -11,4 +11,4 @@ const getPermutations = (arr, num) => {
     return results;
 };
 
-console.log(getPermutations([1, 2, 3, 4], 3));
+console.log(getPermutations([1, 2, 3, 4], 2));
