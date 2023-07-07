@@ -12,7 +12,6 @@ for (let i = 1; i <= n; i++) {
     }
 }
 
-let visited = Array(c.length).fill(false);
 let selected = [];
 let ans = 1e9;
 
@@ -45,13 +44,9 @@ function dfs(dep, start) {
     // 특정원소를 선택해 넣어주고 재귀함수를 호출하고 나오면 특정원소를 다시 빼준다
     // 모든 경우의수 조합
     for (let i = start; i < c.length; i++) {
-        if (visited[i]) continue; // 이미 방문했으면 무시
-
         selected.push(i); // 현재원소 선택
-        visited[i] = true; // 현재 원소 방문 처리
         dfs(dep + 1, i + 1); // 재귀 함수 호출
         selected.pop(); // 현재원소 선택 취소
-        visited[i] = false; // 현재 원소 방문 처리 취소
     }
 }
 
