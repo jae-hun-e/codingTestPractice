@@ -12,6 +12,8 @@ const getPermutations = (arr, num) => {
     return results;
 };
 
+console.log(getPermutations([1, 2, 3, 4], 4));
+
 const getAllPermutations = (arr) => {
     const results = [];
     arr.forEach((_, index, origin) =>
@@ -20,4 +22,4 @@ const getAllPermutations = (arr) => {
     return results;
 };
 
-console.log(getAllPermutations([1, 2, 3, 4]));
+// console.log(getAllPermutations([1, 2, 3, 4]));
