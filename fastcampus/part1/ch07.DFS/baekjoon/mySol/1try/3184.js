@@ -39,8 +39,6 @@ let sheep = 0,
 
 function dfs(y, x) {
     visited[y][x] = true;
-    // if (graph[y][x] === "o") sheep.push([y, x]);
-    // if (graph[y][x] === "v") wolf.push([y, x]);
 
     if (graph[y][x] === "o") sheep++;
     if (graph[y][x] === "v") wolf++;
@@ -62,14 +60,6 @@ for (let i = 0; i < r; i++) {
     for (let j = 0; j < c; j++) {
         if (!visited[i][j] && graph[i][j] !== "#") {
             dfs(i, j);
-
-            // if (sheep.length > wolf.length) {
-            //     wolf.forEach(([y, x]) => (graph[y][x] = "."));
-            //     sheepCnt += sheep.length;
-            // } else {
-            //     sheep.forEach(([y, x]) => (graph[y][x] = "."));
-            //     wolfCnt += wolf.length;
-            // }
 
             sheep > wolf ? (ans1 += sheep) : (ans2 += wolf);
 
