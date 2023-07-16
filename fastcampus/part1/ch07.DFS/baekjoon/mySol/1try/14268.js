@@ -1,6 +1,6 @@
-const input = ["5 5", "-1 1 2 3 4", "1 2 2", "1 3 4", "1 5 6", "2 5", "2 3"];
+// const input = ["5 5", "-1 1 2 3 4", "1 2 2", "1 3 4", "1 5 6", "2 5", "2 3"];
 
-// const input = ["5 5", "-1 1 1 1 4", "1 2 2", "1 3 4", "1 5 6", "2 5", "2 3"];
+const input = ["5 5", "-1 1 1 1 4", "1 2 2", "1 3 4", "1 5 6", "2 5", "2 3"];
 // const input = require('fs').readFileSync('/dev/stdin').toString().trim().split('\n');
 
 const [n, m] = input[0].split(" ").map(Number);
@@ -10,7 +10,7 @@ const arr = input[1].split(" ").map(Number);
 
 for (let i = 1; i < m; i++) graph[arr[i]].push(i + 1);
 
-// console.log(graph);
+console.log(graph);
 
 const ans = new Array(n + 1).fill(0);
 
