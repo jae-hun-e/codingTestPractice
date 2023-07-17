@@ -1,29 +1,4 @@
-class Queue {
-    constructor() {
-        this.items = [];
-        this.headIndex = 0;
-        this.tailIndex = 0;
-    }
-
-    enqueue(item) {
-        this.items[this.tailIndex++] = item;
-    }
-
-    dequeue() {
-        const item = this.items[this.headIndex];
-        delete this.items[this.headIndex];
-        this.headIndex++;
-        return item;
-    }
-
-    peek() {
-        return this.items[this.headIndex];
-    }
-
-    getLength() {
-        return this.tailIndex - this.headIndex;
-    }
-}
+const Queue = require("./queue");
 
 const graph = [[], [2, 3, 4], [1], [1, 5, 6], [1, 7], [3, 8], [3], [4], [5]];
 
@@ -35,17 +10,17 @@ function bfs(graph, start, visited) {
     const queue = new Queue();
 
     // 초기 셋팅
-    queue.enqueue(start);
+    queue.enque(start);
     visited[start] = true;
 
     // 너비우선 방문
-    while (queue.getLength() !== 0) {
-        v = queue.dequeue();
+    while (queue.size() !== 0) {
+        v = queue.deque();
         console.log("방문 노드", v);
         for (i of graph[v]) {
             // 방문여부 검사
             if (!visited[i]) {
-                queue.enqueue(i);
+                queue.enque(i);
                 visited[i] = true;
             }
         }
