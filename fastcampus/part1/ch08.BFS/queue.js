@@ -1,6 +1,6 @@
 module.exports = class Queue {
     constructor() {
-        this.queue = []; // 큐
+        this.queue = {}; // 큐
         this.head = 0; // 큐의 가장 앞 idx
         this.tail = 0; // 큐의 가장 뒤 idx
     }
