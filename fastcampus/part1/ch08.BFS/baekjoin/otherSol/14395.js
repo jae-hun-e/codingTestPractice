@@ -13,7 +13,7 @@ class Queue {
         this.tail = 0;
     }
     enqueue(value) {
-        this.queue[this.head++] = value;
+        this.queue[this.tail++] = value;
     }
 
     dequeue() {
@@ -47,6 +47,7 @@ if (s == t) {
 
 // 큐가 빌 때까지 반복하기
 while (queue.size()) {
+    // console.log("queue", queue);
     let [value, opers] = queue.dequeue();
     if (value > 1e9) continue; // 값의 범위를 벗어나는 경우
     if (value == t) {
