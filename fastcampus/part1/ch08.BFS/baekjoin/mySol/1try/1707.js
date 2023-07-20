@@ -60,11 +60,12 @@ while (ts--) {
     }
 
     let ans = false;
-    for (let cur = 1; cur < v + 1; cur++) {
-        if (ans) break;
+    outer: for (let cur = 1; cur < v + 1; cur++) {
+        // if (ans) break;
         for (const next of graph[cur]) {
             if (visited[cur] === visited[next]) {
-                ans = true;
+                // ans = true;
+                break outer;
                 break;
             }
         }

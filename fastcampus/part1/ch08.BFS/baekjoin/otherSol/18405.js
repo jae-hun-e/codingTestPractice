@@ -31,14 +31,12 @@ for (let i = 1; i <= n; i++) {
     });
     graph.push(line);
 }
-console.log(graph);
+// console.log(graph);
 
 viruse.sort((a, b) => a[0] - b[0]);
 // console.log(viruse);
 
 const [s, x, y] = input[n + 1].split(" ").map(Number);
-
-const visited = Array.from({ length: n }, () => new Array(n).fill(0));
 
 const dx = [-1, 1, 0, 0],
     dy = [0, 0, -1, 1];
@@ -48,7 +46,7 @@ const queue = new Queue();
 function bfs(dep) {
     for (const [cv, cy, cx] of viruse) {
         queue.enque([cv, cy, cx, dep]);
-        visited[cy][cx] = cv;
+        graph[cy][cx] = cv;
     }
 
     while (queue.size()) {
@@ -62,14 +60,14 @@ function bfs(dep) {
 
             if (ny < 0 || ny >= n || nx < 0 || nx >= n) continue;
 
-            if (!visited[ny][nx]) {
+            if (!graph[ny][nx]) {
                 queue.enque([cv, ny, nx, dep + 1]);
-                visited[ny][nx] = cv;
+                graph[ny][nx] = cv;
             }
         }
     }
 }
 
 bfs(0);
-
-console.log(visited[x - 1][y - 1]);
+// console.log(graph);
+console.log(graph[x - 1][y - 1]);
