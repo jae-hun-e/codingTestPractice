@@ -34,7 +34,7 @@ const que = new Que();
 let selelte = [];
 let flag = false;
 
-function bfs(i, j, visited) {
+function bfs(i, j, idx, visited) {
     que.enque([i, j]);
     visited[i][j] = true;
     selelte.push([i, j, graph[i][j]]);
@@ -52,6 +52,7 @@ function bfs(i, j, visited) {
             if (Math.abs(s - ns) < l || Math.abs(s - ns) > r) continue;
 
             if (!visited[ny][nx]) {
+                console.log("ny, nx", ny, nx);
                 que.enque([ny, nx]);
                 visited[ny][nx] = true;
                 selelte.push([ny, nx, ns]);
@@ -64,31 +65,34 @@ let cnt = 0;
 while (true) {
     const visited = Array.from({ length: n }, () => new Array(n).fill(false));
     let cntF = false;
+    let idx = 0;
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
             if (!visited[i][j]) {
-                bfs(i, j, visited);
-
-                if (selelte.length >= 2) {
-                    if (!cntF) {
-                        cnt++;
-                        cntF = true;
-                    }
-                    // console.log("selelte", selelte);
-                    const score = parseInt(
-                        selelte.reduce((a, b) => (a += b[2]), 0) / selelte.length
-                    );
-                    selelte.forEach(([y, x]) => (graph[y][x] = score));
-                    visited.forEach((line, i) =>
-                        line.forEach((v, j) => (visited[i][j] = false))
-                    );
-                    // console.log("visited", visited);
-                    console.log("graph", graph);
-                }
-                selelte = [];
+                bfs(i, j, idx, visited);
+                idx++;
             }
         }
     }
+
+    // if (selelte.length >= 2) {
+    //     if (!cntF) {
+    //         cnt++;
+    //         cntF = true;
+    //     }
+    //     // console.log("selelte", selelte);
+    //     const score = parseInt(
+    //         selelte.reduce((a, b) => (a += b[2]), 0) / selelte.length
+    //     );
+    //     selelte.forEach(([y, x]) => (graph[y][x] = score));
+    //     visited.forEach((line, i) =>
+    //         line.forEach((v, j) => (visited[i][j] = false))
+    //     );
+    //     // console.log("visited", visited);
+    //     console.log("graph", graph);
+    // }
+    // selelte = [];
+    console.log("selelte", selelte);
 
     console.log("flag", cntF);
     if (!flag) break;
