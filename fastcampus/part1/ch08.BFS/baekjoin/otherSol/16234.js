@@ -27,10 +27,6 @@ for (let i = 1; i <= n; i++) graph.push(input[i].split(" ").map(Number));
 const dx = [-1, 1, 0, 0],
     dy = [0, 0, -1, 1];
 
-const que = new Que();
-let selelte = [];
-let flag = false;
-
 let totalCount = 0;
 
 while (true) {
