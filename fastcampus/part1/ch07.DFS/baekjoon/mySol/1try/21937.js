@@ -22,7 +22,6 @@ const dfs = (cur) => {
         if (!visited[prev]) {
             ans++;
             dfs(prev);
-            loki98;
         }
     }
 };
