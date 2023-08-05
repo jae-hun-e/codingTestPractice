@@ -40,7 +40,7 @@ while (coin !== 2) {
 
     while (que.size()) {
         const [y, x, d] = que.deque();
-        console.log("y,x,d", y, x, d);
+        // console.log("y,x,d", y, x, d);
 
         if (y === n - 1 && x === m - 1) {
             // console.log("dep", dep, d);
