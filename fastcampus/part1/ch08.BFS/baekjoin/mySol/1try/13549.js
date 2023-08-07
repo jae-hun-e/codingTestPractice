@@ -26,11 +26,11 @@ const [n, k] = input[0].split(" ").map(Number);
 
 const visited = new Set();
 
-const que = [];
+const que = new Que();
 que.push([n, 0]);
 visited.add(n);
 
-while (que.length) {
+while (que.length()) {
     const [cur, dep] = que.shift();
 
     if (cur === k) {
@@ -41,14 +41,14 @@ while (que.length) {
     for (const d of [2, -1, 1]) {
         if (d !== 2) {
             const next = cur + d;
-            // if (next < 0 || next > 100000) continue;
+            if (next < 0 || next > 100000) continue;
             if (!visited.has(next)) {
                 que.push([next, dep + 1]);
                 visited.add(next);
             }
         } else {
             const next = cur * d;
-            // if (next < 0 || next > 100000) continue;
+            if (next < 0 || next > 100000) continue;
             if (!visited.has(next)) {
                 que.push([next, dep]);
                 visited.add(next);
