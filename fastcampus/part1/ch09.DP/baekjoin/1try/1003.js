@@ -1,4 +1,4 @@
-const input = ["2", "6", "22"];
+const input = ["2", "6", "3"];
 
 // const input = require("fs").readFileSync("dev/stdin").toString().trim().split("\n");
 
