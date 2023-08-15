@@ -6,7 +6,6 @@ const n = input[0] * 1;
 const arr = input[1].split(" ").map(Number);
 
 // LIS
-
 const dt = new Array(n + 1).fill(1);
 
 for (let i = 0; i <= n; i++) {
