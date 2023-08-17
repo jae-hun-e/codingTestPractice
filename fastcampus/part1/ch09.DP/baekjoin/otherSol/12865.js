@@ -22,5 +22,5 @@ for (let i = 1; i <= m; i++) {
         else dp[i][j] = dp[i - 1][j];
     }
 }
-
+// console.log(dp);
 console.log(dp[m][k]);
