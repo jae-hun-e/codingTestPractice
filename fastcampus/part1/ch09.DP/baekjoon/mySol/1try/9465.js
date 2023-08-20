@@ -1,4 +1,17 @@
-const input = require("fs").readFileSync("dev/stdin").toString().trim().split("\n");
+const input = [
+    "2",
+    "5",
+    "50 10 100 20 40",
+    "30 50 70 10 60",
+    "7",
+    "10 30 10 50 100 20 40",
+    "20 40 30 50 60 20 80",
+];
+
+// const input = ["1", "4", "100 1 1 100", "1 1 100 1"];
+// const input = ["1", "2", "10 10", "30 40"];
+
+// const input = require("fs").readFileSync("dev/stdin").toString().trim().split("\n");
 
 let ts = input[0] * 1;
 
