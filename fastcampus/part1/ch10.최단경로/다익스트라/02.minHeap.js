@@ -1,7 +1,5 @@
 class MinHeap {
-    constructor() {
-        this.heap = [null];
-    }
+    heap = [null];
 
     push(value) {
         this.heap.push(value);
@@ -10,7 +8,7 @@ class MinHeap {
 
         // 부모가root까지 가거나 자식보다 부모가 더 작으면 종료
         while (parentIndext !== 0 && this.heap[parentIndext] > value) {
-            this._swap(parentIndext, currentIndex);
+            this.#swap(parentIndext, currentIndex);
 
             currentIndex = parentIndext;
             parentIndext = Math.floor(currentIndex / 2);
@@ -28,14 +26,14 @@ class MinHeap {
         let rightIndex = 3;
 
         while (
-            this.heap[currentIndex] > this.heap[leftIndex] ||
-            this.heap[currentIndex] > this.heap[rightIndex]
+            this.#compare(currentIndex, leftIndex) ||
+            this.#compare(currentIndex, rightIndex)
         ) {
-            if (this.heap[leftIndex] > this.heap[rightIndex]) {
-                this._swap(currentIndex, rightIndex);
+            if (this.#compare(leftIndex, rightIndex)) {
+                this.#swap(currentIndex, rightIndex);
                 currentIndex = rightIndex;
             } else {
-                this._swap(currentIndex, leftIndex);
+                this.#swap(currentIndex, leftIndex);
                 currentIndex = leftIndex;
             }
 
@@ -46,8 +44,12 @@ class MinHeap {
         return value;
     }
 
-    _swap(a, b) {
+    #swap(a, b) {
         [this.heap[a], this.heap[b]] = [this.heap[b], this.heap[a]];
+    }
+
+    #compare(a, b) {
+        return this.heap[a] > this.heap[b];
     }
 
     isEmpty() {
