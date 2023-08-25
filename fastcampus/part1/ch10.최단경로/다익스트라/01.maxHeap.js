@@ -9,7 +9,7 @@ class MaxHeap {
 
         // 부모보다 자식이 더 크면 부모 자식 index 변경 => root까지 올라감
         while (parentIndex !== 0 && this.heap[parentIndex] < value) {
-            this._swap(parentIndex, currentIndex);
+            this.#swap(parentIndex, currentIndex);
 
             currentIndex = parentIndex;
             parentIndex = Math.floor(currentIndex / 2);
@@ -27,8 +27,8 @@ class MaxHeap {
 
         // 부모보다 자식 노드 중 더 큰게 있는지 검사 => 마지막 level까지
         while (
-            this.heap[currentIndex] < this.heap[leftIndex] ||
-            this.heap[currentIndex] < this.heap[rightIndex]
+            this.#compare(currentIndex, leftIndex) ||
+            this.#compare(currentIndex, rightIndex)
         ) {
             /** 주의할 점 : 오른쪽 이 더 클 때로 검사해야 함
              * 자식 노드가 하나인 경우 leftNode가 되고 rightNode는 undefined가 됨
@@ -38,14 +38,14 @@ class MaxHeap {
              * */
 
             // 오른쪽이 더 클때
-            if (this.heap[leftIndex] < this.heap[rightIndex]) {
-                this._swap(rightIndex, currentIndex);
+            if (this.#compare(leftIndex, rightIndex)) {
+                this.#swap(rightIndex, currentIndex);
 
                 currentIndex = rightIndex; // 변견된 값을 기준index로
             }
             // 왼쪽이 더 클때
             else {
-                this._swap(leftIndex, currentIndex);
+                this.#swap(leftIndex, currentIndex);
 
                 currentIndex = leftIndex; // 변견된 값을 기준index로
             }
@@ -58,8 +58,16 @@ class MaxHeap {
     }
 
     // 두 값 변경 메서드
-    _swap(a, b) {
+    #swap(a, b) {
         [this.heap[a], this.heap[b]] = [this.heap[b], this.heap[a]];
+    }
+
+    #compare(a, b) {
+        return this.heap[a] < this.heap[b];
+    }
+
+    size() {
+        return this.heap.length;
     }
 }
 
