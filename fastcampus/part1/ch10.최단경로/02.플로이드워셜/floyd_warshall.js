@@ -23,7 +23,7 @@ for (let k = 1; k <= n; k++) {
     }
 }
 
-// console.log(graph);
+console.log(graph);
 
 let line = "";
 for (let a = 1; a <= n; a++) {
