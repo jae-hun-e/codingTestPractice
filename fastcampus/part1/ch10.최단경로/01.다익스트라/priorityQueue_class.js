@@ -83,6 +83,15 @@ class PriorityQueue {
 
     // index가 a, b인 값 비교
     #compare(a, b) {
+        console.log(
+            "this.#elements[a], this.#elements[b]",
+            this.#elements[a],
+            this.#elements[b]
+        );
+        console.log(
+            "this.#comparator(this.#elements[a], this.#elements[b])",
+            this.#comparator(this.#elements[a], this.#elements[b])
+        );
         return this.#comparator(this.#elements[a], this.#elements[b]);
     }
 

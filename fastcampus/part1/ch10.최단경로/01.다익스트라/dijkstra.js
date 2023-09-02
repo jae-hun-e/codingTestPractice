@@ -35,7 +35,7 @@ const distance = new Array(n + 1).fill(1e9);
 
 function dijkstra(start) {
     // 최소힙으로 우선순위 큐 사용
-    const pq = new PriorityQueue((a, b) => a - b);
+    const pq = new PriorityQueue((a, b) => a[0] - b[0]);
 
     // 우선순위 큐에 초기값 삽입
     pq.push([0, start]);
