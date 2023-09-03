@@ -3,7 +3,7 @@ const input = ["5 6", "1", "5 1 1", "1 2 2", "1 3 3", "2 3 4", "2 4 5", "3 4 6"]
 
 // const input = require("fs").readFileSync("dev/stdin").toString().trim().split("\n");
 
-class PriorityQueue {
+class PQ {
     #comparator;
     #elements = [];
 
@@ -112,11 +112,11 @@ let distance = new Array(n + 1).fill(INF);
 
 function dijkstra() {
     // 다익스트라(Dijkstra) 알고리즘 수행
-    let pq = new PriorityQueue((a, b) => b[0] - a[0]); // 최소힙(Min Heap)
+    let pq = new PQ(); // 최소힙(Min Heap)
     // 시작 노드로 가기 위한 최단 거리는 0으로 우선순위 큐에 삽입
     pq.push([0, start]);
     distance[start] = 0;
-    while (pq.size() != 0) {
+    while (!pq.isEmpty()) {
         // 우선순위 큐가 비어있지 않다면
         // 가장 최단 거리가 짧은 노드에 대한 정보 꺼내기
         let [dist, now] = pq.pop();
