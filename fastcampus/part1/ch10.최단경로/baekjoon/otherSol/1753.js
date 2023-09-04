@@ -19,7 +19,8 @@ class PQ {
         while (current > 0) {
             let parent = Math.floor((current - 1) / 2);
 
-            // 부모노드의 우선순위가 더 높다면 종료
+            // 부모노드의 우선순위가 더 높다면
+
             if (this.#compare(current, parent) <= 0) break;
 
             // 노드 변경
