@@ -14,6 +14,7 @@ for (let i = 1; i <= n; i++) {
 // console.log(graph);
 
 let ans = "";
+// 전위순회
 const preorederList = [];
 (function preoreder(cur) {
     preorederList.push(cur);
