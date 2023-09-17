@@ -8,7 +8,7 @@ const input = [
     "3 1 2",
     "3 4 4",
     "4 2 3",
-]; // 10
+];
 
 /**
  * 장소에서 모든 애들까지 가는 최단거리
@@ -16,14 +16,13 @@ const input = [
 
 // const input = require('fs').readFileSync('dev/stdin').toString().trim().split('\n')
 
-class MPQ {
-    constructor(calc) {
-        this.comp = calc;
-        this.heap = [];
-    }
+class MinHeap {
+    comp = (a, b) => a[1] - b[1];
+    heap = [];
 
     push(v) {
         this.heap.push(v);
+
         let cur = this.heap.length - 1;
 
         while (cur > 0) {
@@ -44,21 +43,21 @@ class MPQ {
         const size = this.heap.length;
 
         this.heap[0] = last;
-        let cur = 0;
 
+        let cur = 0;
         while (cur < size) {
             let parent = cur;
             let l = cur * 2 + 1;
             let r = cur * 2 + 2;
 
-            if (l < size && this.comp(this.heap[l], this.heap[parent])) parent = l;
-            if (r < size && this.comp(this.heap[r], this.heap[parent])) parent = r;
-
+            if (l < size && this.comp(this.heap[l], this.heap[parent]) >= 0) parent = l;
+            if (r < size && this.comp(this.heap[r], this.heap[parent]) >= 0) parent = r;
             if (cur === parent) break;
 
             this.#swap(cur, parent);
             cur = parent;
         }
+
         return first;
     }
 
@@ -68,52 +67,50 @@ class MPQ {
 }
 
 const [n, m, x] = input[0].split(" ").map(Number);
-
-// [노드, 시간]
-const graph = Array.from({ length: n + 1 }, () => new Array());
+const graph = Array.from({ length: n + 1 }, () => []);
+const rGraph = Array.from({ length: n + 1 }, () => []);
 for (let i = 1; i <= m; i++) {
-    const [s, e, t] = input[i].split(" ").map(Number);
-    graph[s].push([e, t]);
+    const [a, b, t] = input[i].split(" ").map(Number);
+    graph[a].push([b, t]);
+    rGraph[b].push([a, t]);
 }
 
 // console.log(graph);
-let distance = Array.from({ length: n + 1 }, () => new Array(n + 1).fill(1e9));
 
-function dijkstra(str) {
-    const mpq = new MPQ((a, b) => a[1] - b[1]);
+const distance = new Array(n + 1).fill(1e9);
+const rDistance = new Array(n + 1).fill(1e9);
 
-    // [노드,시간]
-    mpq.push([str, 0]);
-    distance[str][str] = 0;
+function dijkstra(start, graph, distance) {
+    const pq = new MinHeap();
 
-    while (mpq.heap.length) {
-        const [node, time] = mpq.pop();
+    pq.push([start, 0]);
+    distance[start] = 0;
 
-        if (distance[str][node] < time) continue;
+    while (pq.heap.length) {
+        const [cn, ct] = pq.pop();
 
-        for (const [nn, nt] of graph[node]) {
-            const dist = nt + time;
+        if (distance[cn] < ct) continue;
 
-            if (dist < distance[str][nn]) {
-                distance[str][nn] = dist;
-                mpq.push([nn, dist]);
+        for (const [nn, nt] of graph[cn]) {
+            const cost = ct + nt;
+
+            if (distance[nn] > cost) {
+                distance[nn] = cost;
+                pq.push([nn, cost]);
             }
         }
     }
 }
 
-// dijkstra(x);
-// console.log(x, ":", distance);
+dijkstra(x, graph, distance);
+dijkstra(x, rGraph, rDistance);
 
-for (let i = 1; i <= n; i++) {
-    dijkstra(i);
-}
 // console.log(distance);
+// console.log(rDistance);
 
-const sum = [];
-
+const max = [];
 for (let i = 1; i <= n; i++) {
-    sum.push(distance[x][i] + distance[i][x]);
+    max.push(distance[i] + rDistance[i]);
 }
 
-console.log(Math.max(...sum));
+console.log(Math.max(...max));

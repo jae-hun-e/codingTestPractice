@@ -23,7 +23,7 @@ let negativeCycle = bf(1); // 1번 노드가 시작 노드
 function bf(start) {
     // 시작노드 초기화
     dist[start] = 0;
-    // n번의 라운드 반복
+    // n번의 라운드 반복(노드 개수만큼)
     for (let i = 0; i < n; i++) {
         // 매 반복마다 모든 간선 확인
         for (let j = 0; j < m; j++) {
