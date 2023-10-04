@@ -5,7 +5,7 @@ function solution(genres, plays) {
         count[c] ? count[c].push([i, plays[i]]) : (count[c] = [[i, plays[i]]]);
         return a.set(c, a.get(c) ? a.get(c) + plays[i] : plays[i]), a;
     }, new Map());
-    console.log(acc);
+    console.log(...acc);
 
     [...acc]
         .sort((a, b) => b[1] - a[1])

@@ -3,7 +3,7 @@ function solution(genres, plays) {
     genres.forEach((t, i) => {
         dic[t] = dic[t] ? dic[t] + plays[i] : plays[i];
     });
-    // console.log(dic);
+    console.log("dic", dic);
 
     var dupDic = {};
     const tmp1 = genres.map((t, i) => ({ genre: t, count: plays[i], index: i }));
