@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="test">test</div>
+        <script>
+            const button = document.getElementById("test");
+            function clickHandler(e) {
+                e.currentTarget.innerHTML = "클릭되었습니다!"; // this는 clickHandler 함수를 가리킴
+                e.currentTarget.style.backgroundColor = "red"; // this는 clickHandler 함수를 가리킴
+            }
+            // clickHandler 함수를 이벤트 핸들러로 등록
+            button.addEventListener("click", clickHandler);
+        </script>
+    </body>
+</html>
