@@ -5,7 +5,7 @@ let end = 0;
 let sum = 0;
 
 // sol 1 start 기준
-// start를 증가시키면 비교
+// start를 증가시키며 비교
 for (let i = 0; i < n; i++) {
     // 목표값 보다 작다면 end 증가
     while (sum < m && end < n) {
