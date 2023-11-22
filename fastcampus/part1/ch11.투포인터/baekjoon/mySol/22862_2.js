@@ -3,29 +3,22 @@ const input = ["8 2", "1 2 3 4 5 6 7 8"];
 
 const [n, k] = input[0].split(" ").map(Number);
 const arr = input[1].split(" ").map(Number);
-const evenArr = [];
-arr.forEach((v, i) => {
-    if (!(v % 2)) evenArr.push(i);
-});
 
-const evenComp = [];
-for (let i = 0; i < evenArr.length - 1; i++) {
-    evenComp.push(evenArr[i + 1] - evenArr[i] - 1);
-}
-
-let start = 0;
-let end = 1;
-
-const cnt = [];
-while (true) {
-    const sum = evenComp.slice(start, end).reduce((a, b) => a + b);
-
-    if (sum <= k) {
-        cnt.push(end - start);
-        if (end === evenComp.length - 1) break;
-        end++;
-    } else {
-        start++;
+let cnt = 0,
+    del = 0;
+for (let start = 0, end = start; start < n; start++) {
+    while (end < n) {
+        // 짝수
+        if (!(arr[end] % 2)) end++;
+        // 홀수
+        else {
+            if (del === k) break;
+            del++;
+            end++;
+        }
     }
+    cnt = Math.max(cnt, end - start - del);
+    // 시작점이 홀수면 다음반복문은 시작점+1부터이므로 del 카운팅을 1 빼줌
+    if (arr[start] % 2 == 1) del--;
 }
-console.log(Math.max(...cnt) + 1);
+console.log(cnt);
