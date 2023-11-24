@@ -6,7 +6,7 @@ class Que {
     push(v) {
         this.q[this.t++] = v;
     }
-    shift() {
+    pop() {
         const v = this.q[this.h];
         delete this.q[this.h++];
         return v;
@@ -72,16 +72,21 @@ class PQ {
 const minPQ = new PQ((a, b) => b[0] - a[0]); // 최소값
 const maxPQ = new PQ((a, b) => a[0] - b[0]); // 최대값
 
-// 다익스트라  = dp + minPQ (시작점부터 모든 노드까지 최단 거리)
-const dp = new Array(100).fill(Infinity);
+/*
+  다익스트라  = dp + minPQ (시작점부터 모든 노드까지 최단 거리)
+*/
+
 /*최소값을 찾는다면*/
 function dijkstra(start) {
     const pq = new PQ((a, b) => a[0] - b[0]);
+    const dp = new Array(100).fill(Infinity);
     pq.push([0, start]);
     dp[start] = 0;
 
     while (pq.heap.length) {
         const [cost, cur] = pq.pop();
+
+        if (dp[cur] < cost) continue;
 
         for (const [nCost, next] of graph[cur]) {
             const dist = cost + nCost;
@@ -93,3 +98,98 @@ function dijkstra(start) {
         }
     }
 }
+
+/*최소 값과 경로를 같이 찾는다면 => dp에 경로 함께 저장*/
+function dijkstra(start) {
+    const pq = new PQ((a, b) => a[0] - b[0]);
+    // 경로 기록
+    const dp = new Array(100).fill([Infinity, []]);
+    pq.push([0, start]);
+    dp[start] = [0, []];
+
+    while (pq.heap.length) {
+        const [cost, cur] = pq.pop();
+
+        if (dp[cur][0] < cost) continue;
+
+        for (const [nCost, next] of graph[cur]) {
+            const dist = cost + nCost;
+
+            if (dp[next][0] < dist) {
+                pq.push([nCost, next]);
+                dp[next] = [dist, [...dp[cur][1], next]];
+            }
+        }
+    }
+}
+
+/*어떤 경로는 제외하고 최소 값을 찾고 싶으면 */
+function dijkstra(start, a, b) {
+    const pq = new PQ((a, b) => a[0] - b[0]);
+    const dp = new Array(100).fill(Infinity);
+    pq.push([0, start]);
+    dp[start] = 0;
+
+    while (pq.heap.length) {
+        const [cost, cur] = pq.pop();
+
+        if (dp[cur] < cost) continue;
+
+        for (const [nCost, next] of graph[cur]) {
+            // 경로 제외
+            if ((cur === a && next === b) || (cur === b && next === a)) continue;
+
+            const dist = cost + nCost;
+
+            if (dp[next] < dist) {
+                pq.push([nCost, next]);
+                dp[next] = dist;
+            }
+        }
+    }
+}
+
+/*
+  BFS기본식
+*/
+function bfs(start) {
+    const que = new Que();
+    const visited = new Array(n + 1).fill(false);
+    que.push(start);
+    visited[start] = true;
+
+    while (que.length()) {
+        const cur = que.pop();
+
+        for (const next of graph[cur]) {
+            if (!visited[next]) continue;
+
+            visited[next] = true;
+            que.push(next);
+        }
+    }
+}
+
+/*
+  DFS 2차배열
+*/
+const dfs = () => {
+    const visited = Array.from({ length: n + 1 }, () => new Array(n + 1).fill(false));
+    const dx = [0, 0, -1, 1],
+        dy = [-1, 1, 0, 0];
+    function dfs(y, x) {
+        visited[y][x] = true;
+
+        for (let i = 0; i < 4; i++) {
+            const nx = x + dx[i],
+                ny = y + dy[i];
+
+            if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
+
+            if (visited[ny][nx]) continue;
+
+            visited[ny][nx] = true;
+            dfs(ny, nx);
+        }
+    }
+};
