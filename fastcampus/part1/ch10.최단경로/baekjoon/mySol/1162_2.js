@@ -58,40 +58,37 @@ const graph = Array.from({ length: n + 1 }, () => new Array());
 
 input.slice(1).forEach((line) => {
     const [a, b, c] = line.split(" ").map(Number);
-    graph[a].push([b, c]);
-    graph[b].push([a, c]);
+    graph[a].push([c, b]);
+    graph[b].push([c, a]);
 });
-
-const dp = Array.from({ length: n + 1 }, () => new Array(k + 1).fill(Infinity)); // [노드][포장횟수] = 비용
 
 function dijkstra(start) {
     const pq = new PQ((a, b) => b[0] - a[0]);
-
-    pq.push([0, start, 0]); // [비용, 노드, 포장]
-    dp[start][0] = 0; // 시작값 초화
+    const dp = Array.from({ length: k + 1 }, () => new Array(n + 1).fill(Infinity));
+    pq.push([0, 0, start]);
+    dp[0][start] = 0;
 
     while (pq.heap.length) {
-        const [dist, cur, paved] = pq.pop();
+        const [cost, pack, cur] = pq.pop();
 
-        // dp값이 현재비용보다 더 작은 경우 pass
-        if (dp[cur][paved] < dist) continue;
+        if (dp[pack][cur] < cost) continue;
 
-        for (const [next, nDist] of graph[cur]) {
-            const cost = dist + nDist; // 현재 비용 + 이동 비용
-            if (cost < dp[next][paved]) {
-                dp[next][paved] = cost;
-                pq.push([cost, next, paved]);
+        for (const [nCost, next] of graph[cur]) {
+            const dist = nCost + cost;
+
+            // 거쳐서 가는게 더 짧을 때
+            if (dist < dp[pack][next]) {
+                dp[pack][next] = dist;
+                pq.push([dist, pack, next]);
             }
-
-            if (paved < k && dist < dp[next][paved + 1]) {
-                dp[next][paved + 1] = dist;
-                pq.push([dist, next, paved + 1]);
+            // 포장한게 더 짧을 때 => 포장한 비용 저장
+            if (pack < k && cost < dp[pack + 1][next]) {
+                dp[pack + 1][next] = cost;
+                pq.push([cost, pack + 1, next]);
             }
         }
     }
+
+    return dp.map((line) => line.at(-1));
 }
-
-dijkstra(1);
-console.log(dp);
-
-console.log(Math.min(...dp.at(-1)));
+console.log(Math.min(...dijkstra(1)));

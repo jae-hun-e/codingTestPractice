@@ -1,5 +1,6 @@
-const input = ["4 4 1", "1 2 10", "2 4 10", "1 3 1", "3 4 100"];
-
+// const input = ["5 6", "1 2 4", "1 3 3", "2 3 1", "2 4 4", "2 5 7", "4 5 1"]; // 11
+// const input = ["6 7", "1 2 1", "2 3 4", "3 4 4", "4 6 4", "1 5 5", "2 5 2", "5 6 5"]; // 13
+const input = ["5 7", "1 2 8", "1 4 10", "2 3 9", "2 4 10", "2 5 1", "3 4 7", "3 5 10"]; // 27
 // const input = require("fs").readFileSync("dev/stdin").toString().trim().split("\n");
 
 class PQ {
@@ -52,46 +53,47 @@ class PQ {
         [this.heap[a], this.heap[b]] = [this.heap[b], this.heap[a]];
     }
 }
-const [n, m, k] = input[0].split(" ").map(Number);
 
+const [n, m] = input[0].split(" ").map(Number);
 const graph = Array.from({ length: n + 1 }, () => new Array());
-
-input.slice(1).forEach((line) => {
-    const [a, b, c] = line.split(" ").map(Number);
+for (let i = 1; i <= m; i++) {
+    const [a, b, c] = input[i].split(" ").map(Number);
     graph[a].push([b, c]);
     graph[b].push([a, c]);
-});
+}
+// console.log(graph);
 
-const dp = Array.from({ length: n + 1 }, () => new Array(k + 1).fill(Infinity)); // [노드][포장횟수] = 비용
-
-function dijkstra(start) {
+function dijkstra(start, graph, a, b) {
     const pq = new PQ((a, b) => b[0] - a[0]);
+    const dp = new Array(n + 1).fill([Infinity, []]);
 
-    pq.push([0, start, 0]); // [비용, 노드, 포장]
-    dp[start][0] = 0; // 시작값 초화
-
+    pq.push([0, start]);
+    dp[start] = [0, []];
     while (pq.heap.length) {
-        const [dist, cur, paved] = pq.pop();
+        const [cost, cur] = pq.pop();
 
-        // dp값이 현재비용보다 더 작은 경우 pass
-        if (dp[cur][paved] < dist) continue;
+        if (dp[cur][0] < cost) continue;
 
-        for (const [next, nDist] of graph[cur]) {
-            const cost = dist + nDist; // 현재 비용 + 이동 비용
-            if (cost < dp[next][paved]) {
-                dp[next][paved] = cost;
-                pq.push([cost, next, paved]);
-            }
-
-            if (paved < k && dist < dp[next][paved + 1]) {
-                dp[next][paved + 1] = dist;
-                pq.push([dist, next, paved + 1]);
+        for (const [next, nCost] of graph[cur]) {
+            if ((cur === a && next === b) || (cur === b && next === a)) continue;
+            const dist = cost + nCost;
+            if (dp[next][0] > dist) {
+                dp[next] = [dist, [...dp[cur][1], cur]];
+                pq.push([dist, next]);
             }
         }
     }
+    return dp;
 }
 
-dijkstra(1);
-console.log(dp);
+const path = dijkstra(1, graph).at(-1)[1];
+path.push(n);
+// console.log(path);
 
-console.log(Math.min(...dp.at(-1)));
+let max = 0;
+for (let i = 0; i < path.length - 1; i++) {
+    const cost = dijkstra(1, graph, path[i], path[i + 1]).at(-1)[0];
+    cost !== Infinity && (max = max > cost ? max : cost);
+}
+// console.log(ans);
+console.log(max);
