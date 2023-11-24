@@ -1,22 +1,7 @@
-// 큐
-class Que {
-    q = [];
-    h = 0;
-    t = 0;
-    push(v) {
-        this.q[this.t++] = v;
-    }
-    shift() {
-        const v = this.q[this.h];
-        delete this.q[this.h++];
-        return v;
-    }
-    length() {
-        return this.t - this.h;
-    }
-}
+// const input = ["4 6", "1 2 3", "2 3 3", "3 4 1", "1 3 5", "2 4 5", "1 4 4", "2 3"];
+const input = ["4 2", "1 3 5", "2 4 5", "3 2"];
+// const input = require("fs").readFileSync("dev/stdin").toString().trim().split("\n");
 
-// 우선순위 큐
 class PQ {
     constructor(calc) {
         this.comp = calc;
@@ -25,10 +10,12 @@ class PQ {
 
     push(v) {
         this.heap.push(v);
+
         let cur = this.heap.length - 1;
 
         while (cur > 0) {
             let parent = Math.floor((cur - 1) / 2);
+
             if (this.comp(this.heap[cur], this.heap[parent]) <= 0) break;
 
             this.swap(cur, parent);
@@ -41,8 +28,8 @@ class PQ {
 
         const peek = this.heap[0];
         this.heap[0] = this.heap.pop();
-
         const size = this.heap.length;
+
         let cur = 0;
 
         while (cur < size) {
@@ -54,13 +41,11 @@ class PQ {
                 parent = left;
             if (right < size && this.comp(this.heap[right], this.heap[parent]) >= 0)
                 parent = right;
-
-            if (cur === parent) break;
+            if (parent === cur) break;
 
             this.swap(cur, parent);
             cur = parent;
         }
-
         return peek;
     }
 
@@ -69,27 +54,46 @@ class PQ {
     }
 }
 
-const minPQ = new PQ((a, b) => b[0] - a[0]); // 최소값
-const maxPQ = new PQ((a, b) => a[0] - b[0]); // 최대값
+const [n, e] = input[0].split(" ").map(Number);
 
-// 다익스트라  = dp + minPQ (시작점부터 모든 노드까지 최단 거리)
-const dp = new Array(100).fill(Infinity);
-/*최소값을 찾는다면*/
+const graph = Array.from({ length: n + 1 }, () => new Array());
+for (let i = 1; i <= e; i++) {
+    const [a, b, c] = input[i].split(" ").map(Number);
+    graph[a].push([c, b]);
+    graph[b].push([c, a]);
+}
+
+const [v1, v2] = input[e + 1].split(" ").map(Number);
+
 function dijkstra(start) {
-    const pq = new PQ((a, b) => a[0] - b[0]);
+    const pq = new PQ((a, b) => b[0] - a[0]);
+    const dp = new Array(n + 1).fill(1e9);
+
     pq.push([0, start]);
     dp[start] = 0;
 
     while (pq.heap.length) {
         const [cost, cur] = pq.pop();
 
+        if (dp[cur] < cost) continue;
+
         for (const [nCost, next] of graph[cur]) {
             const dist = cost + nCost;
 
-            if (dp[next] < dist) {
-                pq.push([nCost, next]);
-                dp[next] = dist;
-            }
+            if (dp[next] < dist) continue;
+
+            pq.push([dist, next]);
+            dp[next] = dist;
         }
     }
+    return dp;
 }
+
+const root = dijkstra(1);
+const cost1 = dijkstra(v1);
+const cost2 = dijkstra(v2);
+const path1 = root[v1] + cost1[v2] + cost2[n];
+const path2 = root[v2] + cost2[v1] + cost1[n];
+
+const min = path1 > path2 ? path2 : path1;
+console.log(min >= 1e9 ? -1 : min);
