@@ -98,8 +98,9 @@ function dijkstra(start) {
         }
     }
 }
+/* 최소값을 지나온 경로와 함께 찾기 */
 
-/*최소 값과 경로를 같이 찾는다면 => dp에 경로 함께 저장*/
+/* case1 최소 값과 경로를 같이 찾는다면 => dp에 경로 함께 저장 => 메모리 초과 자주 발생 */
 function dijkstra(start) {
     const pq = new PQ((a, b) => a[0] - b[0]);
     // 경로 기록
@@ -123,7 +124,7 @@ function dijkstra(start) {
     }
 }
 
-/*어떤 경로는 제외하고 최소 값을 찾고 싶으면 */
+/*어떤 경로는 제외하고 최소 값을 찾고 싶으면 피할 경로를 dijkstra에 넘겨줌*/
 function dijkstra(start, a, b) {
     const pq = new PQ((a, b) => a[0] - b[0]);
     const dp = new Array(100).fill(Infinity);
