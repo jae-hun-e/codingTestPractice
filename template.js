@@ -100,7 +100,7 @@ function dijkstra(start) {
 }
 /* 최소값을 지나온 경로와 함께 찾기 */
 
-/* case1 최소 값과 경로를 같이 찾는다면 => dp에 경로 함께 저장 => 메모리 초과 자주 발생 */
+/* case1) 최소 값과 경로를 같이 찾는다면 => dp에 경로 함께 저장 => 메모리 초과 자주 발생 */
 function dijkstra(start) {
     const pq = new PQ((a, b) => a[0] - b[0]);
     // 경로 기록
@@ -119,6 +119,35 @@ function dijkstra(start) {
             if (dp[next][0] < dist) {
                 pq.push([nCost, next]);
                 dp[next] = [dist, [...dp[cur][1], next]];
+            }
+        }
+    }
+}
+
+/* case2) 일반 다익스트라로 dp테이블 만들고 bfs로 순회하며 찾기 => 메모리 이득!*/
+function findPaths(start, end, reverseGrpah) {
+    const que = new Que();
+    const visited = new Set();
+    que.push(end);
+    visited.add(end);
+
+    const paths = [];
+
+    while (que.length()) {
+        const cur = que.pop();
+
+        if (cur === start) continue; // 여러개 찾고싶으면 continue, 하나만 찾고싶으면 break
+
+        for (const [prev, cost] of reverseGrpah[cur]) {
+            const dist = dp[prev] + cost;
+            // 이전 경로의 dp값과 현재 간선 값 더했을 때 현재 dp값이라면 최단경로임
+            if (dist === dp[cur]) {
+                paths.push([prev, cur]);
+                // 한번만 방문!
+                if (!visited.has(prev)) {
+                    que.push(prev);
+                    visited.add(prev);
+                }
             }
         }
     }
