@@ -91,10 +91,10 @@ function dijkstra(start) {
         for (const [nCost, next] of graph[cur]) {
             const dist = cost + nCost;
 
-            if (dp[next] < dist) {
-                pq.push([nCost, next]);
-                dp[next] = dist;
-            }
+            if (dp[next] < dist) continue;
+
+            pq.push([nCost, next]);
+            dp[next] = dist;
         }
     }
 }
@@ -116,10 +116,10 @@ function dijkstra(start) {
         for (const [nCost, next] of graph[cur]) {
             const dist = cost + nCost;
 
-            if (dp[next][0] < dist) {
-                pq.push([nCost, next]);
-                dp[next] = [dist, [...dp[cur][1], next]];
-            }
+            if (dp[next][0] < dist) continue;
+
+            pq.push([nCost, next]);
+            dp[next] = [dist, [...dp[cur][1], next]];
         }
     }
 }
@@ -171,10 +171,10 @@ function dijkstra(start, a, b) {
 
             const dist = cost + nCost;
 
-            if (dp[next] < dist) {
-                pq.push([nCost, next]);
-                dp[next] = dist;
-            }
+            if (dp[next] < dist) continue;
+
+            pq.push([nCost, next]);
+            dp[next] = dist;
         }
     }
 }
